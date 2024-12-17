@@ -1,0 +1,64 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm[toml]"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stock-picks-optimizer"
+authors = [
+  { name = "TJ Maynes", email = "tj@tjmaynes.com" },
+]
+description = "A CLI app that determines how many shares (current price) of stock(s) you can purchase with a given budget."
+readme = "README.md"
+requires-python = ">=3.12"
+dynamic = ["version"]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "typer==0.15.1",
+    "yfinance[nospam]==0.2.50",
+    "requests==2.32.3",
+    "requests-cache==1.2.1",
+    "requests-ratelimiter==0.7.0",
+    "prettytable==3.12.0",
+    "pyyaml==6.0.2"
+]
+
+[project.optional-dependencies]
+dev = [
+    "mypy==1.13.0",
+    "pytest==8.3.4",
+    "mock==5.1.0",
+    "ruff==0.8.3",
+    "types-PyYAML",
+    "types-requests"
+]
+
+[tool.setuptools.dynamic]
+version = {attr = "stock_picks_optimizer.constants.__VERSION__"}
+
+[project.scripts]
+stock-picks-optimizer = "stock_picks_optimizer.main:app"
+
+[tool.pytest.ini_options]
+pythonpath = "stock_picks_optimizer"
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+exclude = [
+    "(?<=stock_picks_optimizer/test_).*"
+]
+
+[[tool.mypy.overrides]]
+module = "yfinance.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "requests_cache.*"
+ignore_missing_imports = true

@@ -1,0 +1,9 @@
+budget: 1000.0
+
+picks:
+  - symbol: "VOO"
+    percentage: 0.7
+  - symbol: "VXUS"
+    percentage: 0.25
+  - symbol: "BND"
+    percentage: 0.05
