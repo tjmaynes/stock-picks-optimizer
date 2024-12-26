@@ -5,6 +5,7 @@ from requests_cache.backends.sqlite import SQLiteCache
 from requests_ratelimiter import LimiterMixin, MemoryQueueBucket
 from pyrate_limiter import Duration, RequestRate, Limiter
 import yfinance as yf
+from stock_picks_optimizer.constants import __CONFIG_FILE_PATH__
 
 
 class CachedLimiterSession(CacheMixin, LimiterMixin, Session):
@@ -18,7 +19,7 @@ class StockPicksFetcher:
                 RequestRate(2, Duration.SECOND * 5)
             ),  # max 2 requests per 5 seconds
             bucket_class=MemoryQueueBucket,
-            backend=SQLiteCache("yfinance.cache"),
+            backend=SQLiteCache("{}.yfinance-cache".format(__CONFIG_FILE_PATH__)),
         )
         self.session.headers["User-agent"] = "stock-picks-optimizer/0.1.0"
 

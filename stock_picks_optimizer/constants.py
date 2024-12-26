@@ -2,7 +2,7 @@ import typer
 from pathlib import Path
 
 
-__APP_NAME__ = "com.tjmaynes.stock-picker-optimizer"
+__APP_NAME__ = "com.tjmaynes.stock-picks-optimizer"
 __APP_DIRECTORY__ = Path(typer.get_app_dir(__APP_NAME__))
 __CONFIG_FILE_NAME__ = "config.yml"
 __CONFIG_FILE_PATH__ = __APP_DIRECTORY__ / __CONFIG_FILE_NAME__

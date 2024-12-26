@@ -1,4 +1,4 @@
-# stock-picks-optimizer
+# stock-picks-optimizer-cli
 > A CLI app that determines how many shares (current price) of stock(s) you can purchase with a given budget.
 
 ## Usage

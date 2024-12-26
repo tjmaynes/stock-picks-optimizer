@@ -25,4 +25,4 @@ smoke_test: build
 deploy: install lint test build
 
 clean:
-	rm -rf dist/ build/ reports/ *.egg-info/
+	rm -rf dist/ build/ reports/ *.egg-info/ *cache
