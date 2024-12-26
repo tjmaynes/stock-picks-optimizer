@@ -1,0 +1,30 @@
+{
+  "name": "stock-picks-optimizer-web",
+  "version": "0.1.0",
+  "description": "A web app that helps you determine how many shares (current price) of stock(s) you can purchase with a given budget.",
+  "author": "TJ Maynes <tj@tjmaynes.com>",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "start": "npm run build && cd dist && node index.js",
+    "lint": "biome lint --write ./src ./tests vite.config.ts",
+    "format": "biome format --write ./src ./tests vite.config.ts",
+    "test": "npx playwright test"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "hono": "^4.6.15",
+    "yahoo-finance2": "^2.13.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@hono/vite-build": "^1.2.0",
+    "@hono/vite-dev-server": "^0.17.0",
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^20.11.17",
+    "tsx": "^4.7.1",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.6"
+  }
+}
