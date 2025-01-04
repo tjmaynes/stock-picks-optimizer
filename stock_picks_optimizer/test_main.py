@@ -10,7 +10,7 @@ from mock import patch
 runner = CliRunner()
 
 
-def test_when_latest_is_called_it_should_return_optimized_stock_picks_output():
+def test_latest_it_should_return_optimized_stock_picks_output():
     with patch.object(
         FetchLatestStockPricesUseCase, "invoke"
     ) as mock_fetch_latest_stock_prices_use_case:
@@ -38,3 +38,7 @@ With a budget of $2000.0, you'll have roughly $44.52 remaining to invest.
 """.format(__APP_DATA_DB_PATH__).lstrip()
         assert actual.stdout in expected_stdout
         assert actual.exit_code == 0
+
+# def test_web_should_start_web_app():
+#     actual = runner.invoke(app, args=["web"], input=b"\cc")
+#     assert actual.exit_code == 0

@@ -20,6 +20,8 @@ classifiers = [
 
 dependencies = [
     "typer==0.15.1",
+    "uvicorn==0.34.0",
+    "fastapi==0.115.6",
     "yfinance[nospam]==0.2.50",
     "requests==2.32.3",
     "requests-cache==1.2.1",

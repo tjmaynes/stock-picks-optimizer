@@ -5,9 +5,7 @@ from stock_picks_optimizer.constants import (
     __APP_USER_AGENT__,
     __APP_DATA_DB_MIGRATIONS_PATH__,
 )
-from stock_picks_optimizer.data.migrate import ensure_db_ready
 from stock_picks_optimizer.domain.models import StockGroup, StockPick
-
 from stock_picks_optimizer.use_cases import (
     FetchAllStockGroupsUseCase,
     FetchLatestStockPricesUseCase,
@@ -17,11 +15,12 @@ from stock_picks_optimizer.use_cases import (
     AddDefaultStockGroupUseCase,
     CheckStockGroupExistsByNameUseCase,
 )
-
 from stock_picks_optimizer.utils.session import CachedLimiterSessionBuilder
+from stock_picks_optimizer.data.migrate import ensure_db_ready
 
 import sqlite3
 import typer
+import uvicorn
 
 app = typer.Typer()
 db_conn = sqlite3.connect(__APP_DATA_DB_PATH__)
@@ -82,7 +81,7 @@ def latest() -> None:
 
 @app.command()
 def web() -> None:
-    print("web")
+    uvicorn.run("stock_picks_optimizer.web.main:app", host="0.0.0.0", port=8000, reload=False)
 
 
 if __name__ == "__main__":
