@@ -20,7 +20,7 @@ build: clean
 
 smoke_test: build
 	python -m pip install dist/*.whl --force-reinstall
-	stock-picks-optimizer run
+	stock-picks-optimizer latest
 
 deploy: install lint test build
 

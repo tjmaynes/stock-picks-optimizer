@@ -10,6 +10,13 @@ class StockPick:
 
 
 @dataclass
+class StockGroup:
+    name: str
+    budget: float
+    picks: List[StockPick]
+
+
+@dataclass
 class StockPickResult(StockPick):
     quantity: int = 0
 
@@ -22,6 +29,7 @@ class StockPickResult(StockPick):
 
 @dataclass
 class StockPicksOptimizerResult:
-    results: List[StockPickResult]
+    name: str
+    picks: List[StockPickResult]
     original_budget: float
     leftover: float
