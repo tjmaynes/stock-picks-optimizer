@@ -11,7 +11,9 @@ class FetchAllStockGroupsUseCase:
     def invoke(self) -> List[StockGroup]:
         curr = self.__db_conn.cursor()
 
-        stock_group_rows = curr.execute("SELECT id, name, budget FROM stock_group")
+        stock_group_rows = curr.execute(
+            "SELECT id, name, budget, is_active FROM stock_group"
+        )
 
         results = []
         for raw_stock_group in stock_group_rows.fetchall():
@@ -35,6 +37,7 @@ class FetchAllStockGroupsUseCase:
                 StockGroup(
                     name=raw_stock_group[1],
                     budget=raw_stock_group[2],
+                    is_active=bool(raw_stock_group[3]),
                     picks=picks,
                 )
             )

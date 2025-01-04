@@ -1,9 +1,7 @@
-from typing import Union
+import fastapi
 
-from fastapi import FastAPI
-
-app = FastAPI()
+app = fastapi.FastAPI()
 
 # @app.get("/")
-# def read_root():
+# def read_root() -> None:
 #     return {"Hello": "World"}

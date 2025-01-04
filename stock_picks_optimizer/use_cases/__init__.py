@@ -16,6 +16,12 @@ from stock_picks_optimizer.use_cases.add_default_stock_group import (
 from stock_picks_optimizer.use_cases.optimize_stock_groups import (
     OptimizeStockGroupsUseCase as OptimizeStockGroupsUseCase,
 )
-from stock_picks_optimizer.use_cases.print_optimization_results import (
-    PrintOptimizationResultsUseCase as PrintOptimizationResultsUseCase,
+from stock_picks_optimizer.use_cases.print_latest_optimization_results import (
+    PrintLatestOptimizationResultsUseCase as PrintLatestOptimizationResultsUseCase,
+)
+from stock_picks_optimizer.use_cases.ensure_db_ready import (
+    EnsureDbReadyUseCase as EnsureDbReadyUseCase,
+)
+from stock_picks_optimizer.use_cases.ensure_app_ready import (
+    EnsureAppReadyUseCase as EnsureAppReadyUseCase,
 )

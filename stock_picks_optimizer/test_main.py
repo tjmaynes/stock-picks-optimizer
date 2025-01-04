@@ -39,6 +39,7 @@ With a budget of $2000.0, you'll have roughly $44.52 remaining to invest.
         assert actual.stdout in expected_stdout
         assert actual.exit_code == 0
 
+
 # def test_web_should_start_web_app():
 #     actual = runner.invoke(app, args=["web"], input=b"\cc")
 #     assert actual.exit_code == 0

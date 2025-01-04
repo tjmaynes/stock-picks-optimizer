@@ -3,14 +3,28 @@ from typing import List
 from stock_picks_optimizer.domain.models import StockPicksOptimizerResult
 
 from prettytable import PrettyTable
+from stock_picks_optimizer.use_cases import (
+    FetchAllStockGroupsUseCase,
+    OptimizeStockGroupsUseCase,
+)
 
 
-class PrintOptimizationResultsUseCase:
-    def __init__(self, app_version: str, app_datastore_path: str):
+class PrintLatestOptimizationResultsUseCase:
+    def __init__(
+        self,
+        fetch_all_stock_groups_use_case: FetchAllStockGroupsUseCase,
+        optimize_stock_groups_use_case: OptimizeStockGroupsUseCase,
+        app_version: str,
+        app_datastore_path: str,
+    ):
+        self.__fetch_all_stock_groups_use_case = fetch_all_stock_groups_use_case
+        self.__optimize_stock_groups_use_case = optimize_stock_groups_use_case
         self.app_version = app_version
         self.app_datastore_path = app_datastore_path
 
-    def invoke(self, results: List[StockPicksOptimizerResult]) -> None:
+    def invoke(self) -> None:
+        stock_groups = self.__fetch_all_stock_groups_use_case.invoke()
+        results = self.__optimize_stock_groups_use_case.invoke(stock_groups)
         print(self._prettify_results(results))
 
     def _prettify_results(self, results: List[StockPicksOptimizerResult]) -> str:

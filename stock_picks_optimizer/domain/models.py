@@ -14,6 +14,7 @@ class StockGroup:
     name: str
     budget: float
     picks: List[StockPick]
+    is_active: bool = True
 
 
 @dataclass
