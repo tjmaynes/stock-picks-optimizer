@@ -9,9 +9,14 @@ class EnsureDbReadyUseCase:
         self.__db_path = db_path
 
     def invoke(self) -> None:
+        self.__ensure_db_file_exists()
+        self.__run_migrations()
+
+    def __ensure_db_file_exists(self) -> None:
         if not Path(self.__db_path).exists():
             open(self.__db_path, "a").close()
 
+    def __run_migrations(self) -> None:
         (current_version,) = next(
             self.__db_conn.cursor().execute("PRAGMA user_version"), (1,)
         )

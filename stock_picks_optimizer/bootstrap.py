@@ -1,10 +1,4 @@
-from stock_picks_optimizer.constants import (
-    __VERSION__,
-    __APP_DATA_YFINANCE_CACHE_PATH__,
-    __APP_DATA_DB_PATH__,
-    __APP_USER_AGENT__,
-    __APP_DATA_DB_MIGRATIONS_PATH__,
-)
+from stock_picks_optimizer.version import __VERSION__
 from stock_picks_optimizer.use_cases import (
     FetchAllStockGroupsUseCase,
     FetchLatestStockPricesUseCase,
@@ -19,58 +13,59 @@ from stock_picks_optimizer.use_cases import (
 from stock_picks_optimizer.utils.session import CachedLimiterSessionBuilder
 
 import sqlite3
+from pathlib import Path
 from kink import di
 
 
 def bootstrap_di() -> None:
-    di["app_data_yfinance_cache_path"] = str(__APP_DATA_YFINANCE_CACHE_PATH__)
-    di["app_user_agent"] = str(__APP_USER_AGENT__)
-    di["app_data_db_migrations_path"] = __APP_DATA_DB_MIGRATIONS_PATH__
-    di["app_data_db_path"] = __APP_DATA_DB_PATH__
+    di["app_name"] = "stock-picks-optimizer"
     di["app_version"] = __VERSION__
-
-    di["db_conn"] = lambda dii: sqlite3.connect(__APP_DATA_DB_PATH__)
-    di["fetch_all_stock_groups_use_case"] = lambda dii: FetchAllStockGroupsUseCase(
-        dii["db_conn"]
+    di["app_user_agent"] = "{}/{}".format(di["app_name"], di["app_version"])
+    di["app_data_db_path"] = Path(__file__).parent / "data/{}.db".format(di["app_name"])
+    di["app_data_db_migrations_path"] = Path("stock_picks_optimizer/data/migrations")
+    di["app_data_yfinance_cache_path"] = Path(
+        "stock_picks_optimizer/data/yfinance-cache.sqlite"
     )
-    di["cached_limiter_session"] = lambda dii: (
+    di["app_web_templates_path"] = "stock_picks_optimizer/web/templates"
+
+    di["db_conn"] = lambda _: sqlite3.connect(di["app_data_db_path"])
+    di["fetch_all_stock_groups_use_case"] = FetchAllStockGroupsUseCase(di["db_conn"])
+    di["cached_limiter_session"] = (
         CachedLimiterSessionBuilder()
-        .cache_path(dii["app_data_yfinance_cache_path"])
-        .user_agent_header(dii["app_user_agent"])
+        .cache_path(di["app_data_yfinance_cache_path"])
+        .user_agent_header(di["app_user_agent"])
         .build()
     )
-    di["fetch_latest_stock_prices_use_case"] = (
-        lambda dii: FetchLatestStockPricesUseCase(session=dii["cached_limiter_session"])
+    di["fetch_latest_stock_prices_use_case"] = FetchLatestStockPricesUseCase(
+        session=di["cached_limiter_session"]
     )
-    di["optimize_stock_groups_use_case"] = lambda dii: OptimizeStockGroupsUseCase(
-        dii["fetch_latest_stock_prices_use_case"]
+    di["optimize_stock_groups_use_case"] = OptimizeStockGroupsUseCase(
+        di["fetch_latest_stock_prices_use_case"]
     )
-    di["print_latest_optimization_results_use_case"] = lambda dii: (
+    di["print_latest_optimization_results_use_case"] = (
         PrintLatestOptimizationResultsUseCase(
             fetch_all_stock_groups_use_case=di["fetch_all_stock_groups_use_case"],
             optimize_stock_groups_use_case=di["optimize_stock_groups_use_case"],
-            app_version=dii["app_version"],
-            app_datastore_path=str(dii["app_data_db_path"]),
+            app_version=di["app_version"],
+            app_datastore_path=str(di["app_data_db_path"]),
         )
     )
-    di["add_stock_group_use_case"] = lambda dii: AddStockGroupUseCase(
-        db_conn=dii["db_conn"]
-    )
+    di["add_stock_group_use_case"] = AddStockGroupUseCase(db_conn=di["db_conn"])
     di["check_stock_group_exists_by_name_use_case"] = (
-        lambda dii: CheckStockGroupExistsByNameUseCase(db_conn=dii["db_conn"])
+        CheckStockGroupExistsByNameUseCase(db_conn=di["db_conn"])
     )
-    di["add_default_stock_group_use_case"] = lambda dii: AddDefaultStockGroupUseCase(
-        add_stock_group_use_case=dii["add_stock_group_use_case"],
-        check_stock_group_exists_by_name_use_case=dii[
+    di["add_default_stock_group_use_case"] = AddDefaultStockGroupUseCase(
+        add_stock_group_use_case=di["add_stock_group_use_case"],
+        check_stock_group_exists_by_name_use_case=di[
             "check_stock_group_exists_by_name_use_case"
         ],
     )
-    di["ensure_db_ready_use_case"] = lambda dii: EnsureDbReadyUseCase(
-        db_conn=dii["db_conn"],
-        migrations_dir_path=dii["app_data_db_migrations_path"],
-        db_path=dii["app_data_db_path"],
+    di["ensure_db_ready_use_case"] = EnsureDbReadyUseCase(
+        db_conn=di["db_conn"],
+        migrations_dir_path=di["app_data_db_migrations_path"],
+        db_path=di["app_data_db_path"],
     )
-    di["ensure_app_ready_use_case"] = lambda dii: EnsureAppReadyUseCase(
-        ensure_db_ready_use_case=dii["ensure_db_ready_use_case"],
-        add_default_stock_group_use_case=dii["add_default_stock_group_use_case"],
+    di["ensure_app_ready_use_case"] = EnsureAppReadyUseCase(
+        ensure_db_ready_use_case=di["ensure_db_ready_use_case"],
+        add_default_stock_group_use_case=di["add_default_stock_group_use_case"],
     )

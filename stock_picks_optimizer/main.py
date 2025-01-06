@@ -17,9 +17,9 @@ def latest() -> None:
 
 
 @app.command()
-def web() -> None:
+def web(port: int = 8000, reload: bool = False) -> None:
     uvicorn.run(
-        "stock_picks_optimizer.web.main:app", host="0.0.0.0", port=8000, reload=False
+        "stock_picks_optimizer.web.main:app", host="0.0.0.0", port=port, reload=reload
     )
 
 

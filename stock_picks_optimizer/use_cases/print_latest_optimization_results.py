@@ -48,15 +48,27 @@ With a budget of ${}, you'll have roughly ${} remaining to invest.
 """.format(result.name, table, result.original_budget, result.leftover).strip()
             formatted_results.append(formatted_result)
 
+        comments = (
+            """
+Comments:
+- To add more stock groups, use the web interface via "stock-picks-optimizer web".
+        """.strip()
+            if len(results) == 1 and results[0].name == "Default"
+            else ""
+        )
+
         return """
-================================================================================
+===================================================================================
 Stock Picks Optimizer {}
 Datastore: {}
 
 {}
-================================================================================
+
+{}
+===================================================================================
         """.format(
             self.app_version,
             self.app_datastore_path,
             "".join(formatted_results),
+            comments,
         ).strip()

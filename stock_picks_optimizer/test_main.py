@@ -1,11 +1,15 @@
+from pathlib import Path
+
 from typer.testing import CliRunner
 from stock_picks_optimizer.main import app
-from stock_picks_optimizer.constants import __APP_DATA_DB_PATH__
+from stock_picks_optimizer.version import __VERSION__
 from stock_picks_optimizer.use_cases.fetch_latest_stock_prices import (
     FetchLatestStockPricesUseCase,
 )
 
 from mock import patch
+
+from stock_picks_optimizer.utils.process import PythonModuleRunner
 
 runner = CliRunner()
 
@@ -20,9 +24,10 @@ def test_latest_it_should_return_optimized_stock_picks_output():
             "BND": 9.09,
         }
         actual = runner.invoke(app, ["latest"])
+        datastore_path = Path(__file__).parent / "data/stock-picks-optimizer.db"
         expected_stdout = """
-================================================================================
-Stock Picks Optimizer v0.1.0
+===================================================================================
+Stock Picks Optimizer {}
 Datastore: {}
 
 Stock group: Default
@@ -34,12 +39,26 @@ Stock group: Default
 |  BND   |   10.0%    |  9.09 |    22    |
 +--------+------------+-------+----------+
 With a budget of $2000.0, you'll have roughly $44.52 remaining to invest.
-================================================================================
-""".format(__APP_DATA_DB_PATH__).lstrip()
+
+Comments:
+- To add more stock groups, use the web interface via "stock-picks-optimizer web".
+===================================================================================
+""".format(__VERSION__, datastore_path).lstrip()
         assert actual.stdout in expected_stdout
         assert actual.exit_code == 0
 
 
-# def test_web_should_start_web_app():
-#     actual = runner.invoke(app, args=["web"], input=b"\cc")
-#     assert actual.exit_code == 0
+# TODO: need to understand why subprocess stdout is not working...
+def test_web_should_start_web_app():
+    module_runner = PythonModuleRunner(
+        ["stock_picks_optimizer.main", "web", "--port", "9090"]
+    )
+
+    # actual_message = module_runner.read_stdout()
+    # assert "Uvicorn running on http://0.0.0.0:9090" in actual_message
+
+    exit_code = module_runner.stop()
+    assert exit_code == 0
+
+    actual_message = module_runner.read_stderr()
+    assert "Uvicorn running on http://0.0.0.0:9090" in actual_message

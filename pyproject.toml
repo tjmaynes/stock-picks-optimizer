@@ -20,8 +20,7 @@ classifiers = [
 
 dependencies = [
     "typer==0.15.1",
-    "uvicorn==0.34.0",
-    "fastapi==0.115.6",
+    "fastapi[standard]==0.115.6",
     "yfinance[nospam]==0.2.50",
     "requests==2.32.3",
     "requests-cache==1.2.1",
@@ -40,7 +39,7 @@ dev = [
 ]
 
 [tool.hatch.version]
-path = "stock_picks_optimizer/constants.py"
+path = "stock_picks_optimizer/version.py"
 
 [project.scripts]
 stock-picks-optimizer = "stock_picks_optimizer.main:app"
@@ -53,7 +52,7 @@ python_version = "3.12"
 warn_return_any = true
 warn_unused_configs = true
 exclude = [
-    "(?<=stock_picks_optimizer/test_).*"
+    ".+test_"
 ]
 
 [[tool.mypy.overrides]]
