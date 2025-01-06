@@ -1,5 +1,5 @@
-from stock_picks_optimizer.domain.models import StockGroup
-from stock_picks_optimizer.use_cases import (
+from stock_picks_optimizer.core.domain.models import StockGroup
+from stock_picks_optimizer.core.use_cases import (
     AddStockGroupUseCase,
     CheckStockGroupExistsByNameUseCase,
 )

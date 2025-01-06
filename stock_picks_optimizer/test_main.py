@@ -1,15 +1,15 @@
 from pathlib import Path
 
 from typer.testing import CliRunner
+
+from stock_picks_optimizer.helpers.process import PythonModuleRunner
 from stock_picks_optimizer.main import app
 from stock_picks_optimizer.version import __VERSION__
-from stock_picks_optimizer.use_cases.fetch_latest_stock_prices import (
+from stock_picks_optimizer.core.use_cases.fetch_latest_stock_prices import (
     FetchLatestStockPricesUseCase,
 )
 
 from mock import patch
-
-from stock_picks_optimizer.utils.process import PythonModuleRunner
 
 runner = CliRunner()
 

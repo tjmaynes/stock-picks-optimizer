@@ -1,5 +1,5 @@
 from stock_picks_optimizer.version import __VERSION__
-from stock_picks_optimizer.use_cases import (
+from stock_picks_optimizer.core.use_cases import (
     FetchAllStockGroupsUseCase,
     FetchLatestStockPricesUseCase,
     OptimizeStockGroupsUseCase,
@@ -10,7 +10,7 @@ from stock_picks_optimizer.use_cases import (
     EnsureAppReadyUseCase,
     EnsureDbReadyUseCase,
 )
-from stock_picks_optimizer.utils.session import CachedLimiterSessionBuilder
+from stock_picks_optimizer.core.utils.session import CachedLimiterSessionBuilder
 
 import sqlite3
 from pathlib import Path
@@ -22,11 +22,11 @@ def bootstrap_di() -> None:
     di["app_version"] = __VERSION__
     di["app_user_agent"] = "{}/{}".format(di["app_name"], di["app_version"])
     di["app_data_db_path"] = Path(__file__).parent / "data/{}.db".format(di["app_name"])
-    di["app_data_db_migrations_path"] = Path("stock_picks_optimizer/data/migrations")
-    di["app_data_yfinance_cache_path"] = Path(
-        "stock_picks_optimizer/data/yfinance-cache.sqlite"
+    di["app_data_db_migrations_path"] = Path(__file__).parent / "data/migrations"
+    di["app_data_yfinance_cache_path"] = (
+        Path(__file__).parent / "data/yfinance-cache.sqlite"
     )
-    di["app_web_templates_path"] = "stock_picks_optimizer/web/templates"
+    di["app_web_templates_path"] = Path(__file__).parent / "web/templates"
 
     di["db_conn"] = lambda _: sqlite3.connect(di["app_data_db_path"])
     di["fetch_all_stock_groups_use_case"] = FetchAllStockGroupsUseCase(di["db_conn"])

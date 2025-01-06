@@ -1,9 +1,9 @@
 from typing import List
 
-from stock_picks_optimizer.domain.models import StockPicksOptimizerResult
+from stock_picks_optimizer.core.domain.models import StockPicksOptimizerResult
 
 from prettytable import PrettyTable
-from stock_picks_optimizer.use_cases import (
+from stock_picks_optimizer.core.use_cases import (
     FetchAllStockGroupsUseCase,
     OptimizeStockGroupsUseCase,
 )

@@ -1,7 +1,7 @@
 from sqlite3 import Connection
 from typing import List
 
-from stock_picks_optimizer.domain.models import StockGroup, StockPick
+from stock_picks_optimizer.core.domain.models import StockGroup, StockPick
 
 
 class FetchAllStockGroupsUseCase:

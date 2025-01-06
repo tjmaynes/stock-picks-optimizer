@@ -1,7 +1,7 @@
 from sqlite3 import Connection
 from typing import Optional
 
-from stock_picks_optimizer.domain.models import StockGroup
+from stock_picks_optimizer.core.domain.models import StockGroup
 
 
 class AddStockGroupUseCase:

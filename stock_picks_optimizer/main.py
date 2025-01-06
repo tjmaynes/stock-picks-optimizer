@@ -1,5 +1,6 @@
+from stock_picks_optimizer.web.main import run as run_web_app
+
 import typer
-import uvicorn
 from kink import di
 
 app = typer.Typer()
@@ -18,9 +19,11 @@ def latest() -> None:
 
 @app.command()
 def web(port: int = 8000, reload: bool = False) -> None:
-    uvicorn.run(
-        "stock_picks_optimizer.web.main:app", host="0.0.0.0", port=port, reload=reload
-    )
+    try:
+        run_web_app(port, reload)
+    except Exception as e:
+        print("Error: {}".format(e))
+        raise typer.Abort()
 
 
 if __name__ == "__main__":

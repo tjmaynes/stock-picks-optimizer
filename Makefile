@@ -21,11 +21,12 @@ build: clean
 smoke_test: build
 	python -m pip install dist/*.whl --force-reinstall
 	stock-picks-optimizer latest
+	stock-picks-optimizer web --port 8000 --reload
 
 deploy: install lint test build
 
 start:
-	python -m stock_picks_optimizer.main web --reload
+	python -m stock_picks_optimizer.main web --port 8000 --reload
 
 clean:
 	rm -rf dist/ build/ reports/ *.egg-info/ *cache
