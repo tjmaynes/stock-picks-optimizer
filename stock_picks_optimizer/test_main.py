@@ -2,7 +2,7 @@ from pathlib import Path
 
 from typer.testing import CliRunner
 
-from stock_picks_optimizer.helpers.process import PythonModuleRunner
+from stock_picks_optimizer.helpers.process import StockPicksOptimizerModuleRunner
 from stock_picks_optimizer.main import app
 from stock_picks_optimizer.version import __VERSION__
 from stock_picks_optimizer.core.use_cases.fetch_latest_stock_prices import (
@@ -50,9 +50,7 @@ Comments:
 
 # TODO: need to understand why subprocess stdout is not working...
 def test_web_should_start_web_app():
-    module_runner = PythonModuleRunner(
-        ["stock_picks_optimizer.main", "web", "--port", "9090"]
-    )
+    module_runner = StockPicksOptimizerModuleRunner(["web", "--port", "9090"])
 
     # actual_message = module_runner.read_stdout()
     # assert "Uvicorn running on http://0.0.0.0:9090" in actual_message

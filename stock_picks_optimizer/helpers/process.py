@@ -35,3 +35,8 @@ class BaseProcessRunner:
 class PythonModuleRunner(BaseProcessRunner):
     def __init__(self, commands: List[str]) -> None:
         super().__init__([sys.executable, "-m"] + commands)
+
+
+class StockPicksOptimizerModuleRunner(PythonModuleRunner):
+    def __init__(self, commands: List[str]) -> None:
+        super().__init__(["stock_picks_optimizer.main"] + commands)
