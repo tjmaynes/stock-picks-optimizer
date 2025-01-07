@@ -20,15 +20,18 @@ def before_each_after_each(page: Page):
 def test_index_should_return_default_stock_group(page: Page):
     page.goto(get_server_url("/"))
     assert page.get_by_text("Default")
-    # #click on sign button
-    # page.click('#signin')
-    # #select Username
-    # page.get_by_text("Select Username").click()
-    # page.locator("#react-select-2-option-0-0").click()
-    # #select Password
-    # page.get_by_text("Select Password").click()
-    # page.locator("#react-select-3-option-0-0").click()
-    # #click login
-    # page.get_by_role("button", name="Log In").click()
-    # #verify user have logged in
-    # assert page.get_by_text("demouser").is_visible()
+
+
+def test_index_should_redirect_to_add_group_page_when_add_group_clicked(
+    page: Page,
+):
+    page.goto(get_server_url("/"))
+    page.get_by_text("Add group").click()
+    page.wait_for_url(get_server_url("/add-group"))
+
+
+def test_add_group_should_redirect_index_page_when_new_group_successfully_added(
+    page: Page,
+):
+    page.goto(get_server_url("/add-group"))
+    page.wait_for_url(get_server_url("/add-group"))

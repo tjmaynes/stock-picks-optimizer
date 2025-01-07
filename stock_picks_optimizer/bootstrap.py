@@ -27,6 +27,7 @@ def bootstrap_di() -> None:
         Path(__file__).parent / "data/yfinance-cache.sqlite"
     )
     di["app_web_templates_path"] = Path(__file__).parent / "web/templates"
+    di["app_web_static_path"] = Path(__file__).parent / "web/static"
 
     di["db_conn"] = lambda _: sqlite3.connect(di["app_data_db_path"])
     di["fetch_all_stock_groups_use_case"] = FetchAllStockGroupsUseCase(di["db_conn"])
