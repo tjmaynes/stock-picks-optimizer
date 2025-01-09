@@ -20,18 +20,12 @@ def before_each_after_each(page: Page):
 def test_index_should_return_default_stock_group(page: Page):
     page.goto(get_server_url("/"))
     assert page.get_by_text("Default")
+    # assert page.is_visible("text='Default'")
 
 
-def test_index_should_redirect_to_add_group_page_when_add_group_clicked(
-    page: Page,
-):
-    page.goto(get_server_url("/"))
-    page.get_by_text("Add group").click()
-    page.wait_for_url(get_server_url("/add-group"))
-
-
-def test_add_group_should_redirect_index_page_when_new_group_successfully_added(
-    page: Page,
-):
-    page.goto(get_server_url("/add-group"))
-    page.wait_for_url(get_server_url("/add-group"))
+# def test_index_should_redirect_to_add_group_page_when_add_group_clicked(
+#     page: Page,
+# ):
+#     page.goto(get_server_url("/"))
+#     page.get_by_text("Add group").click()
+#     page.wait_for_url(get_server_url("/add-group"))

@@ -1,0 +1,12 @@
+<section id="stock-pick">
+    <label>
+        Symbol:
+        <input required type="text" name="symbol" placeholder="Symbol">
+    </label>
+    <label>
+        Percentage:
+        <input required type="text" name="percentage" placeholder="Percentage">
+    </label>
+    <button hx-get="/groups/pick/add" hx-target="#stock-pick" hx-swap="afterend">+</button>
+    <button hx-get="/groups/pick/remove" hx-target="#stock-pick" hx-swap="delete">-</button>
+</section>

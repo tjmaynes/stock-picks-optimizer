@@ -36,6 +36,7 @@ dev = [
     "pytest-playwright==0.6.2",
     "mock==5.1.0",
     "ruff==0.8.3",
+    "djlint==1.36.4",
     "types-requests"
 ]
 
@@ -63,3 +64,8 @@ ignore_missing_imports = true
 [[tool.mypy.overrides]]
 module = "requests_cache.*"
 ignore_missing_imports = true
+
+[tool.djlint]
+profile = "jinja"
+extension = "j2"
+ignore = "J018"

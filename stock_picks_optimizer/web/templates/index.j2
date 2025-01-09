@@ -1,0 +1,9 @@
+{% extends "partials/base.j2" %}
+{% block body_content %}
+    <h1>Stock Groups</h1>
+    <div id="stock-groups"
+         hx-get="/groups"
+         hx-swap="innerHTML"
+         hx-trigger="load"></div>
+    {% include "partials/show_group_form.j2" %}
+{% endblock body_content %}

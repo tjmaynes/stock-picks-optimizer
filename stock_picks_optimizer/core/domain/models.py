@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List
 
 
@@ -13,7 +13,7 @@ class StockPick:
 class StockGroup:
     name: str
     budget: float
-    picks: List[StockPick]
+    picks: List[StockPick] = field(default_factory=list)
     is_active: bool = True
 
 
@@ -23,8 +23,8 @@ class StockPickResult(StockPick):
 
     def __init__(self, pick: StockPick, quantity: int):
         self.symbol = pick.symbol
-        self.last_price = pick.last_price
         self.percentage = pick.percentage
+        self.last_price = pick.last_price
         self.quantity = quantity
 
 

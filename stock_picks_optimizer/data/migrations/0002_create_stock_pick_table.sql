@@ -1,7 +1,7 @@
-PRAGMA user_version=2;
+PRAGMA migration_version=2;
 
 CREATE TABLE IF NOT EXISTS stock_pick (
-    id INTEGER UNIQUE NOT NULL PRIMARY KEY,
+    id INTEGER UNIQUE NOT NULL PRIMARY KEY AUTOINCREMENT,
     symbol TEXT NOT NULL,
     percentage FLOAT NOT NULL,
     last_price FLOAT NULL,

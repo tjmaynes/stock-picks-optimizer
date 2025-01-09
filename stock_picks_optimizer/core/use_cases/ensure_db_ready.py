@@ -18,7 +18,7 @@ class EnsureDbReadyUseCase:
 
     def __run_migrations(self) -> None:
         (current_version,) = next(
-            self.__db_conn.cursor().execute("PRAGMA user_version"), (1,)
+            self.__db_conn.cursor().execute("PRAGMA migration_version"), (0,)
         )
         migrations = list(self.__migrations_dir_path.iterdir())
 

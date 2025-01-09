@@ -1,0 +1,25 @@
+{% for stock_group in stock_groups %}
+    <h1>{{ stock_group.name }}</h1>
+    <table>
+        <tr>
+            <th>Symbol</th>
+            <th>Percentage</th>
+            <th>Last Price</th>
+            <th>Quantity</th>
+        </tr>
+        {% for pick in stock_group.picks %}
+            <tr>
+                <td>{{ pick.symbol }}</td>
+                <td>{{ pick.percentage }}</td>
+                <td>{{ pick.last_price }}</td>
+                <td>{{ pick.quantity }}</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td></td>
+            <td>100.0%</td>
+            <td>{{ stock_group.original_budget }}</td>
+            <td>{{ stock_group.leftover }}</td>
+        </tr>
+    </table>
+{% endfor %}
