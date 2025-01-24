@@ -1,7 +1,7 @@
 <div id="swappable-content"></div>
 <form id="stock-group-form"
       method="post"
-      action="/groups/add"
+      action="{{ url_for('add_group') }}"
       hx-swap="outerHTML"
       hx-target="#swapable-content">
     <label>
@@ -10,7 +10,10 @@
     </label>
     {% include "partials/add_pick_section.j2" %}
     <div>
-        <button hx-get="/groups/cancel_add" hx-target="#stock-group-form">Cancel</button>
-        <button hx-get="/groups/add" hx-target="#stock-group-form">Submit</button>
+        <button hx-get="{{ url_for('add_pick') }}"
+                hx-target="#stock-pick"
+                hx-swap="afterend">Add pick</button>
+        <a href="{{ url_for('index') }}">Cancel</a>
+        <button hx-get="{{ url_for('add_group') }}" hx-target="#stock-group-form">Submit</button>
     </div>
 </form>

@@ -5,12 +5,12 @@ from stock_picks_optimizer.helpers.process import StockPicksOptimizerModuleRunne
 
 
 def get_server_url(path: str) -> str:
-    return "http://localhost:9080{}".format(path)
+    return "http://localhost:9999{}".format(path)
 
 
 @pytest.fixture(scope="function", autouse=True)
 def before_each_after_each(page: Page):
-    module_runner = StockPicksOptimizerModuleRunner(["web", "--port", "9080"])
+    module_runner = StockPicksOptimizerModuleRunner(["web", "--port", "9999"])
 
     yield
 

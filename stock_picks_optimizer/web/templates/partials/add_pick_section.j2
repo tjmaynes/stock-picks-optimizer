@@ -7,6 +7,7 @@
         Percentage:
         <input required type="text" name="percentage" placeholder="Percentage">
     </label>
-    <button hx-get="/groups/pick/add" hx-target="#stock-pick" hx-swap="afterend">+</button>
-    <button hx-get="/groups/pick/remove" hx-target="#stock-pick" hx-swap="delete">-</button>
+    <button hx-get="{{ url_for('remove_pick') }}"
+            hx-target="#stock-pick"
+            hx-swap="delete">-</button>
 </section>

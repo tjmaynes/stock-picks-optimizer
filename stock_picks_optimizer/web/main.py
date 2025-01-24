@@ -21,12 +21,17 @@ app.mount("/static", StaticFiles(directory=di["app_web_static_path"]), name="sta
 
 
 @app.get("/", response_class=HTMLResponse)
-async def get_index(request: Request) -> HTMLResponse:
+async def index(request: Request) -> HTMLResponse:
     return templates.TemplateResponse(request=request, name="index.j2")
 
 
+@app.get("/new", response_class=HTMLResponse)
+async def new(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse(request=request, name="new.j2")
+
+
 @app.get("/groups", response_class=HTMLResponse)
-async def get_groups(request: Request) -> HTMLResponse:
+async def groups(request: Request) -> HTMLResponse:
     stock_groups = di[FetchAllStockGroupsUseCase].invoke()
     optimized_stock_groups = di[OptimizeStockGroupsUseCase].invoke(stock_groups)
     return templates.TemplateResponse(
@@ -37,28 +42,26 @@ async def get_groups(request: Request) -> HTMLResponse:
 
 
 @app.get("/groups/add", response_class=HTMLResponse)
-async def get_add_group(request: Request) -> HTMLResponse:
-    return templates.TemplateResponse(
-        request=request, name="partials/add_group_form.j2"
-    )
+async def add_group(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse(request=request, name="new.j2")
 
 
-@app.get("/groups/pick/add", response_class=HTMLResponse)
-async def get_add_pick(request: Request) -> HTMLResponse:
+@app.get("/partials/groups/pick/add", response_class=HTMLResponse)
+async def add_pick(request: Request) -> HTMLResponse:
     return templates.TemplateResponse(
         request=request, name="partials/add_pick_section.j2"
     )
 
 
-@app.get("/groups/pick/remove", response_class=HTMLResponse)
-async def get_remove_pick(request: Request) -> HTMLResponse:
+@app.get("/partials/groups/pick/remove", response_class=HTMLResponse)
+async def remove_pick(request: Request) -> HTMLResponse:
     return templates.TemplateResponse(
         request=request, name="partials/add_pick_section.j2"
     )
 
 
-@app.get("/groups/cancel_add", response_class=HTMLResponse)
-async def get_cancel_add(request: Request) -> HTMLResponse:
+@app.get("/partials/groups/cancel_add", response_class=HTMLResponse)
+async def cancel_add(request: Request) -> HTMLResponse:
     return templates.TemplateResponse(
         request=request, name="partials/show_group_form.j2"
     )

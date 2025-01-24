@@ -5,5 +5,5 @@
          hx-get="/groups"
          hx-swap="innerHTML"
          hx-trigger="load"></div>
-    {% include "partials/show_group_form.j2" %}
+    <a href="{{ url_for('add_group') }}">Add new group</a>
 {% endblock body_content %}

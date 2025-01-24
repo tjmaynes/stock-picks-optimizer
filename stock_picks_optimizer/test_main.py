@@ -50,7 +50,7 @@ Comments:
 
 # TODO: need to understand why subprocess stdout is not working...
 def test_web_should_start_web_app():
-    module_runner = StockPicksOptimizerModuleRunner(["web", "--port", "9090"])
+    module_runner = StockPicksOptimizerModuleRunner(["web", "--port", "8888"])
 
     # actual_message = module_runner.read_stdout()
     # assert "Uvicorn running on http://0.0.0.0:9090" in actual_message
@@ -59,4 +59,4 @@ def test_web_should_start_web_app():
     assert exit_code == 0
 
     actual_message = module_runner.read_stderr()
-    assert "Uvicorn running on http://0.0.0.0:9090" in actual_message
+    assert "Uvicorn running on http://0.0.0.0:8888" in actual_message
